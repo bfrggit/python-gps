@@ -50,28 +50,26 @@ class GPSPoller(Thread):
 		return self.gpsd.utc
 
 MAIN_HD_SP = 15
+MAIN_SLEEP = 1.0
 
 if __name__ == "__main__":
 	poller = GPSPoller()
 	poller.daemon = True
 	poller.start()
-	print "Daemon starting..."
-	time.sleep(2)
 	while True:
 		os.system("clear")
 		print "GPS readings"
 		print
-		print ("%%-%ds") % 15 % ("latitude"),  poller.latitude()
-		print "%-15s" % ("longitude"), poller.longitude()
-		print "%-15s" % ("altitude"),  poller.altitude()
-		print "%-15s" % ("eps"),       poller.eps()
-		print "%-15s" % ("epx"),       poller.epx()
-		print "%-15s" % ("epv"),       poller.epv()
-		print "%-15s" % ("ept"),       poller.ept()
-		print "%-15s" % ("speed"),     poller.speed()
-		print "%-15s" % ("climb"),     poller.climb()
-		print "%-15s" % ("track"),     poller.track()
-		print "%-15s" % ("mode"),      poller.mode()
-		print "%-15s" % ("time"),      poller.utc()
-		time.sleep(1)
-
+		print ("%%-%ds") % MAIN_HD_SP % ("latitude"),  poller.latitude()
+		print ("%%-%ds") % MAIN_HD_SP % ("longitude"), poller.longitude()
+		print ("%%-%ds") % MAIN_HD_SP % ("altitude"),  poller.altitude()
+		print ("%%-%ds") % MAIN_HD_SP % ("eps"),       poller.eps()
+		print ("%%-%ds") % MAIN_HD_SP % ("epx"),       poller.epx()
+		print ("%%-%ds") % MAIN_HD_SP % ("epv"),       poller.epv()
+		print ("%%-%ds") % MAIN_HD_SP % ("ept"),       poller.ept()
+		print ("%%-%ds") % MAIN_HD_SP % ("speed"),     poller.speed()
+		print ("%%-%ds") % MAIN_HD_SP % ("climb"),     poller.climb()
+		print ("%%-%ds") % MAIN_HD_SP % ("track"),     poller.track()
+		print ("%%-%ds") % MAIN_HD_SP % ("mode"),      poller.mode()
+		print ("%%-%ds") % MAIN_HD_SP % ("time"),      poller.utc()
+		time.sleep(MAIN_SLEEP)
