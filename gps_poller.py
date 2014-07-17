@@ -58,7 +58,7 @@ if __name__ == "__main__":
 	poller.start()
 	while True:
 		os.system("clear")
-		print "GPS readings"
+		print "GPS"
 		print
 		print ("%%-%ds") % MAIN_HD_SP % ("latitude"),  poller.latitude()
 		print ("%%-%ds") % MAIN_HD_SP % ("longitude"), poller.longitude()
