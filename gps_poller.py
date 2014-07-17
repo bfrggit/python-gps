@@ -1,6 +1,7 @@
 import threading
 from threading import Thread
 import time
+from datetime import datetime
 from gps import *
 
 class GPSPoller(Thread):
@@ -34,9 +35,19 @@ class GPSPoller(Thread):
 		return self.gpsd.fix.track
 	
 	# UTC time string
-	# def utc(self):
-	# 	return self.gpsd.utc
+	def __utc(self):
+		return self.gpsd.utc
 	
+	def ptime(self):
+		dtime = None
+		try:
+			dtime = datetime.strptime(self.__utc(), "%Y-%m-%dT%H:%M:%S.%fZ")
+		except ValueError:
+			pass
+		if dtime:
+			return time.mktime(dtime.timetuple())+dtime.microsecond/1.0e+6
+		else: return 0.0
+
 	# Estimated longitude error (m)
 	def epx(self):
 		return self.gpsd.fix.epx
@@ -76,7 +87,7 @@ class GPSPoller(Thread):
 	def sat(self):
 		return self.gpsd.satellites
 
-	def dict(self):
+	def get_dict(self):
 		sat = self.sat()
 		return {
 			"lat": self.lat(),
@@ -85,6 +96,7 @@ class GPSPoller(Thread):
 			"speed": self.speed(),
 			"climb": self.climb(),
 			"track": self.track(),
+			"ptime": self.ptime(),
 			"epx": self.epx(),
 			"epy": self.epy(),
 			"epv": self.epv(),
@@ -104,5 +116,5 @@ if __name__ == "__main__":
 	poller.daemon = True
 	poller.start()
 	while True:
-		print poller.dict()
+		print poller.get_dict()
 		time.sleep(MAIN_SLEEP)
