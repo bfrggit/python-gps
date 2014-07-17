@@ -72,7 +72,12 @@ class GPSPoller(Thread):
 		3: "3D FIX"
 	}
 
+	# Satellites
+	def sat(self):
+		return self.gpsd.satellites
+
 	def dict(self):
+		sat = self.sat()
 		return {
 			"lat": self.lat(),
 			"lon": self.lon(),
@@ -86,7 +91,10 @@ class GPSPoller(Thread):
 			"eps": self.eps(),
 			"epd": self.epd(),
 			"ept": self.ept(),
-			"mode": self.mode()
+			"mode": self.mode(),
+			"sat": {
+				"total": len(sat)
+			}
 		}
 
 MAIN_SLEEP = 1
