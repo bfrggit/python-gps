@@ -36,7 +36,7 @@ class GPSPoller(Thread):
 			delay = GPSPoller._GPSWatchDog.DELAY_BASIC
 			while True:
 				if self._poller.has_gpsd():
-					ptime_this = poller.ptime()
+					ptime_this = self._poller.ptime()
 					if ptime_this == 0.0 or ptime_this == ptime_last:
 						if not timer: # Should not occur
 							timer = time.time()
